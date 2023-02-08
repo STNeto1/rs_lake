@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  some-scylla:
+    image: scylladb/scylla
+    command: --smp 1 --memory 512M --overprovisioned 1
+    container_name: some-scylla
+    ports:
+      - "9042:9042"
+    volumes:
+      - /var/lib/scylla:/var/lib/scylla

@@ -31,5 +31,5 @@ async fn handle_data_input(
         data,
     };
 
-    return (StatusCode::OK, Json(entry));
+    return StatusCode::OK;
 }
