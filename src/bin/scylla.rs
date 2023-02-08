@@ -8,8 +8,12 @@ async fn main() -> Result<(), Error> {
 
     println!("connected to scylla =)");
 
-    client.query("CREATE KEYSPACE IF NOT EXISTS ks WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor' : 1}", &[]).await?;
-    client.query("CREATE TABLE IF NOT EXISTS ks.logs (topic TEXT, timestamp TIMESTAMP, type VARCHAR, data TEXT, PRIMARY KEY (topic, timestamp))", &[]).await?;
+    client
+        .query(rs_lake::client::queries::CREATE_KS, &[])
+        .await?;
+    client
+        .query(rs_lake::client::queries::CREATE_TABLE, &[])
+        .await?;
 
     return Ok(());
 }

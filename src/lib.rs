@@ -1,6 +1,8 @@
 use anyhow::Result;
 use scylla::{transport::errors::NewSessionError, Session, SessionBuilder};
 
+pub mod client;
+
 pub async fn create_scylla_client(uri: &String) -> Result<Session, NewSessionError> {
     println!("connecting to {}", uri);
 
