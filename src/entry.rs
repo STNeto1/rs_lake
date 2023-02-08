@@ -7,6 +7,7 @@ use scylla::{
     },
     FromRow, ValueList,
 };
+use serde::Serialize;
 pub fn get_data_type(data: &serde_json::Value) -> String {
     return match data {
         serde_json::Value::Null => String::from("null"),
@@ -24,6 +25,26 @@ pub struct Entry {
     pub timestamp: Duration,
     pub data_type: String,
     pub data: String,
+}
+
+#[derive(Serialize)]
+pub struct EntryData {
+    pub timestamp: String,
+    pub data_type: String,
+    pub data: serde_json::Value,
+}
+
+impl EntryData {
+    pub fn parse_vector(data: &Vec<Entry>) -> Vec<Self> {
+        return data
+            .into_iter()
+            .map(|entry| Self {
+                timestamp: entry.timestamp.0.to_string(),
+                data_type: entry.data_type.to_owned(),
+                data: serde_json::from_str(&entry.data).unwrap_or_default(),
+            })
+            .collect();
+    }
 }
 
 #[derive(Debug)]

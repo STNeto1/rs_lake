@@ -3,4 +3,10 @@ pub mod queries {
     INSERT INTO ks.logs (topic, timestamp, data, type)
     VALUES (?, ?, ?, ?);
   "#;
+
+    pub static SELECT_LOGS_FROM_QUERY: &str = r#"
+        SELECT *
+        FROM ks.logs
+        WHERE topic = ?;
+    "#;
 }
